@@ -1,0 +1,16 @@
+{
+  "name": "net.yozolab.sceneutils",
+  "displayName": "YL-SceneUtils",
+  "version": "0.0.1",
+  "description": "YozoLab's scene utility package for Unity",
+  "gitDependencies": {},
+  "vpmDependencies": {},
+  "author": {
+    "name": "YozoraKurage",
+    "email": "yozorakurage@yozolab.net",
+    "url": "http://www.yozolab.net"
+  },
+  "legacyFolders": {},
+  "legacyFiles": {},
+  "unity": "2022.3"
+}
