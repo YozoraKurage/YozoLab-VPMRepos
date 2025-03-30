@@ -36,8 +36,11 @@ public static class SceneUtils
 
     private static void CheckKeyPress()
     {
+        Event e = Event.current;
+        if (e == null) return;
+
         // スペースキーが押されたかどうかをチェック
-        if (Event.current != null && Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Space)
+        if (e.type == EventType.KeyDown && e.keyCode == KeyCode.Space)
         {
             // 選択中のオブジェクトを取得
             GameObject[] selectedObjects = Selection.gameObjects;
@@ -50,7 +53,37 @@ public static class SceneUtils
             }
 
             // イベントを使用済みに設定
-            Event.current.Use();
+            e.Use();
+        }
+        
+        // Shift+Zキーが押されたかどうかをチェック
+        if (e.type == EventType.KeyDown && e.keyCode == KeyCode.Z && e.shift)
+        {
+            // アクティブなシーンビューを取得
+            SceneView sceneView = SceneView.lastActiveSceneView;
+            if (sceneView != null)
+            {
+                // 現在のレンダリングモードを次のモードに切り替え
+                switch (sceneView.renderMode)
+                {
+                    case DrawCameraMode.Textured:
+                        sceneView.renderMode = DrawCameraMode.Wireframe;
+                        break;
+                    case DrawCameraMode.Wireframe:
+                        sceneView.renderMode = DrawCameraMode.TexturedWire;
+                        break;
+                    case DrawCameraMode.TexturedWire:
+                    default:
+                        sceneView.renderMode = DrawCameraMode.Textured;
+                        break;
+                }
+                
+                // シーンビューを再描画
+                sceneView.Repaint();
+            }
+            
+            // イベントを使用済みに設定
+            e.Use();
         }
     }
 }
