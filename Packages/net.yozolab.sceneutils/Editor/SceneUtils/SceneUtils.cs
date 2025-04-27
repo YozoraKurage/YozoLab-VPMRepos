@@ -6,9 +6,9 @@ public static class SceneUtils
 {
     static SceneUtils()
     {
-        // ƒGƒfƒBƒ^‚ÌXVƒCƒxƒ“ƒg‚Éƒnƒ“ƒhƒ‰‚ğ’Ç‰Á
+        // ã‚¨ãƒ‡ã‚£ã‚¿ã®æ›´æ–°ã‚¤ãƒ™ãƒ³ãƒˆã«ãƒãƒ³ãƒ‰ãƒ©ã‚’è¿½åŠ 
         EditorApplication.update += OnEditorUpdate;
-        // ‘S‚Ä‚ÌƒGƒfƒBƒ^ƒEƒBƒ“ƒhƒE‚É‘Î‚µ‚ÄƒL[ƒCƒxƒ“ƒg‚ğŠÄ‹‚·‚é
+        // å…¨ã¦ã®ã‚¨ãƒ‡ã‚£ã‚¿ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã«å¯¾ã—ã¦ã‚­ãƒ¼ã‚¤ãƒ™ãƒ³ãƒˆã‚’ç›£è¦–ã™ã‚‹
         EditorApplication.hierarchyWindowItemOnGUI += OnHierarchyWindowItemGUI;
         EditorApplication.projectWindowItemOnGUI += OnProjectWindowItemGUI;
         SceneView.duringSceneGui += OnSceneGUI;
@@ -16,7 +16,7 @@ public static class SceneUtils
 
     private static void OnEditorUpdate()
     {
-        // ƒGƒfƒBƒ^‚ÌXVˆ—
+        // ã‚¨ãƒ‡ã‚£ã‚¿ã®æ›´æ–°å‡¦ç†
     }
 
     private static void OnHierarchyWindowItemGUI(int instanceID, Rect selectionRect)
@@ -39,31 +39,31 @@ public static class SceneUtils
         Event e = Event.current;
         if (e == null) return;
 
-        // ƒXƒy[ƒXƒL[‚ª‰Ÿ‚³‚ê‚½‚©‚Ç‚¤‚©‚ğƒ`ƒFƒbƒN
-        if (e.type == EventType.KeyDown && e.keyCode == KeyCode.Space)
+        // ã‚¹ãƒšãƒ¼ã‚¹ã‚­ãƒ¼ãŒæŠ¼ã•ã‚ŒãŸã‹ã©ã†ã‹ã‚’ãƒã‚§ãƒƒã‚¯
+        if (e.type == EventType.KeyDown && e.keyCode == KeyCode.Space && !e.control)
         {
-            // ‘I‘ğ’†‚ÌƒIƒuƒWƒFƒNƒg‚ğæ“¾
+            // é¸æŠä¸­ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å–å¾—
             GameObject[] selectedObjects = Selection.gameObjects;
 
-            // ‘I‘ğ’†‚ÌƒIƒuƒWƒFƒNƒg‚ÌƒAƒNƒeƒBƒuó‘Ô‚ğØ‚è‘Ö‚¦
+            // é¸æŠä¸­ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚¢ã‚¯ãƒ†ã‚£ãƒ–çŠ¶æ…‹ã‚’åˆ‡ã‚Šæ›¿ãˆ
             foreach (GameObject obj in selectedObjects)
             {
                 Undo.RecordObject(obj, "Toggle Active State");
                 obj.SetActive(!obj.activeSelf);
             }
 
-            // ƒCƒxƒ“ƒg‚ğg—pÏ‚İ‚Éİ’è
+            // ã‚¤ãƒ™ãƒ³ãƒˆã‚’ä½¿ç”¨æ¸ˆã¿ã«è¨­å®š
             e.Use();
         }
         
-        // Shift+ZƒL[‚ª‰Ÿ‚³‚ê‚½‚©‚Ç‚¤‚©‚ğƒ`ƒFƒbƒN
+        // Shift+Zã‚­ãƒ¼ãŒæŠ¼ã•ã‚ŒãŸã‹ã©ã†ã‹ã‚’ãƒã‚§ãƒƒã‚¯
         if (e.type == EventType.KeyDown && e.keyCode == KeyCode.Z && e.shift)
         {
-            // ƒAƒNƒeƒBƒu‚ÈƒV[ƒ“ƒrƒ…[‚ğæ“¾
+            // ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ãªã‚·ãƒ¼ãƒ³ãƒ“ãƒ¥ãƒ¼ã‚’å–å¾—
             SceneView sceneView = SceneView.lastActiveSceneView;
             if (sceneView != null)
             {
-                // Œ»İ‚ÌƒŒƒ“ƒ_ƒŠƒ“ƒOƒ‚[ƒh‚ğŸ‚Ìƒ‚[ƒh‚ÉØ‚è‘Ö‚¦
+                // ç¾åœ¨ã®ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰ã‚’æ¬¡ã®ãƒ¢ãƒ¼ãƒ‰ã«åˆ‡ã‚Šæ›¿ãˆ
                 switch (sceneView.renderMode)
                 {
                     case DrawCameraMode.Textured:
@@ -78,11 +78,37 @@ public static class SceneUtils
                         break;
                 }
                 
-                // ƒV[ƒ“ƒrƒ…[‚ğÄ•`‰æ
+                // ã‚·ãƒ¼ãƒ³ãƒ“ãƒ¥ãƒ¼ã‚’å†æç”»
                 sceneView.Repaint();
             }
             
-            // ƒCƒxƒ“ƒg‚ğg—pÏ‚İ‚Éİ’è
+            // ã‚¤ãƒ™ãƒ³ãƒˆã‚’ä½¿ç”¨æ¸ˆã¿ã«è¨­å®š
+            e.Use();
+        }
+
+        // Ctrl+Spaceã‚­ãƒ¼ãŒæŠ¼ã•ã‚ŒãŸã‹ã©ã†ã‹ã‚’ãƒã‚§ãƒƒã‚¯
+        if (e.type == EventType.KeyDown && e.keyCode == KeyCode.Space && e.control)
+        {
+            // é¸æŠä¸­ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å–å¾—
+            GameObject[] selectedObjects = Selection.gameObjects;
+
+            // é¸æŠä¸­ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®'Tag'ã‚’åˆ‡ã‚Šæ›¿ãˆ
+            foreach (GameObject obj in selectedObjects)
+            {
+                Undo.RecordObject(obj, "Toggle EditorOnly Tag");
+                if (obj.CompareTag("EditorOnly"))
+                {
+                    // 'EditorOnly'ã‚¿ã‚°ã‚’å¤–ã™
+                    obj.tag = "Untagged";
+                }
+                else
+                {
+                    // 'EditorOnly'ã‚¿ã‚°ã‚’ä»˜ã‘ã‚‹
+                    obj.tag = "EditorOnly";
+                }
+            }
+
+            // ã‚¤ãƒ™ãƒ³ãƒˆã‚’ä½¿ç”¨æ¸ˆã¿ã«è¨­å®š
             e.Use();
         }
     }
